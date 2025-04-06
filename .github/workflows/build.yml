@@ -17,4 +17,27 @@ jobs:
       run: gcc -o hello hello.c
       
     - name: 実行テスト
-      run: ./hello
+      id: run_test
+      run: |
+        echo "::set-output name=result::$(./hello)"
+      
+    - name: PRにビルド結果をコメント
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `## C言語ビルド結果 🚀
+          
+          \`\`\`
+          ${{ steps.run_test.outputs.result }}
+          \`\`\`
+          
+          ビルド成功！✅`;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
