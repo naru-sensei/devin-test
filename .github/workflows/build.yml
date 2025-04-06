@@ -1,0 +1,20 @@
+name: C言語ビルド
+
+on:
+  push:
+    branches: [ main, devin/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: コンパイル
+      run: gcc -o hello hello.c
+      
+    - name: 実行テスト
+      run: ./hello
