@@ -40,7 +40,6 @@ gcc -o hello hello.c
 
 - [@naru-sensei](https://github.com/naru-sensei)
 - [@GOROman](https://github.com/GOROman)
-- [@necobit](https://github.com/necobit)
 
 ## ライセンス
 
