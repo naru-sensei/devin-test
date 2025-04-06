@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +23,7 @@ jobs:
     - name: 実行テスト
       id: run_test
       run: |
-        echo "::set-output name=result::$(./hello)"
+        echo "result=$(./hello)" >> $GITHUB_OUTPUT
       
     - name: PRにビルド結果をコメント
       if: github.event_name == 'pull_request'
