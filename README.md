@@ -44,3 +44,8 @@ gcc -o hello hello.c
 ## ライセンス
 
 このプロジェクトはMITライセンスの下で公開されています。
+
+## Devin.ai に興味がある方はこのリファラルからぜひ！
+
+https://app.devin.ai/invite/ifzuUmq3YTE7oXdG
+
