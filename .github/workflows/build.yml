@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   build:
@@ -23,25 +24,23 @@ jobs:
     - name: 実行テスト
       id: run_test
       run: |
-        echo "result=$(./hello)" >> $GITHUB_OUTPUT
-      
+        OUTPUT=$(./hello)
+        echo "実行結果:"
+        echo "$OUTPUT"
+        echo "result<<EOF" >> $GITHUB_OUTPUT
+        echo "$OUTPUT" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        
     - name: PRにビルド結果をコメント
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v6
+      uses: peter-evans/create-or-update-comment@v3
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const output = `## C言語ビルド結果 🚀
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          ## C言語ビルド結果 🚀
           
-          \`\`\`
+          ```
           ${{ steps.run_test.outputs.result }}
-          \`\`\`
+          ```
           
-          ビルド成功！✅`;
-          
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
+          ビルド成功！✅
