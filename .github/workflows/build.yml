@@ -1,0 +1,46 @@
+name: C言語ビルド
+
+on:
+  push:
+    branches: [ main, devin/* ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: コンパイル
+      run: gcc -o hello hello.c
+      
+    - name: 実行テスト
+      id: run_test
+      run: |
+        OUTPUT=$(./hello)
+        echo "実行結果:"
+        echo "$OUTPUT"
+        echo "result<<EOF" >> $GITHUB_OUTPUT
+        echo "$OUTPUT" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        
+    - name: PRにビルド結果をコメント
+      if: github.event_name == 'pull_request'
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          ## C言語ビルド結果 🚀
+          
+          ```
+          ${{ steps.run_test.outputs.result }}
+          ```
+          
+          ビルド成功！✅
