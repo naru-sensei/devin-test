@@ -10,7 +10,7 @@
 ## 機能
 
 - C言語で「Hello, Naru Sensei!」を表示
-- 「Naru Sensei」を行番号付きで10回表示
+- 「Naru Sensei」を行番号付きで100回表示
 - GitHub Actionsによる自動ビルドとテスト
 - PRへのビルド結果の自動コメント
 
