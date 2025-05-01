@@ -41,6 +41,38 @@ gcc -o hello hello.c
 - [@naru-sensei](https://github.com/naru-sensei)
 - [@GOROman](https://github.com/GOROman)
 
+## 設定
+
+このアプリケーションは以下の設定をサポートしています：
+
+### コマンドライン引数
+
+```bash
+./hello --greeting="こんにちは、世界！" --name="侍エンジニア" --repetitions=10
+```
+
+短いオプション形式も使用できます：
+
+```bash
+./hello -g "こんにちは、世界！" -n "侍エンジニア" -r 10
+```
+
+ヘルプメッセージを表示するには：
+
+```bash
+./hello --help
+```
+
+### 環境変数
+
+```bash
+HELLO_GREETING="こんにちは、世界！" HELLO_NAME="侍エンジニア" HELLO_REPETITIONS=10 ./hello
+```
+
+### 優先順位
+
+設定の優先順位は次の通りです：コマンドライン引数 > 環境変数 > デフォルト値
+
 ## ライセンス
 
 このプロジェクトはMITライセンスの下で公開されています。
